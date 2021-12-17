@@ -1,16 +1,14 @@
 ARG PLATFORM=$BUILDPLATFORM
 
 FROM --platform=$PLATFORM messense/rust-musl-cross:x86_64-musl as amd64
-RUN git clone https://github.com/rustwasm/wasm-pack
-RUN cd wasm-pack && cargo build --release --target=x86_64-unknown-linux-musl
-RUN cp /home/rust/src/wasm-pack/target/x86_64-unknown-linux-musl/release/wasm-pack /
+RUN cargo install wasm-pack --target=x86_64-unknown-linux-musl
+RUN cp /root/.cargo/bin/wasm-pack /
 RUN cargo install cargo-chef --target=x86_64-unknown-linux-musl
 RUN cp /root/.cargo/bin/cargo-chef /
 
 FROM --platform=$PLATFORM messense/rust-musl-cross:aarch64-musl as arm64
-RUN git clone https://github.com/rustwasm/wasm-pack
-RUN cd wasm-pack && cargo build --release --target=aarch64-unknown-linux-musl
-RUN cp /home/rust/src/wasm-pack/target/aarch64-unknown-linux-musl/release/wasm-pack /
+RUN cargo install wasm-pack --target=aarch64-unknown-linux-musl
+RUN cp /root/.cargo/bin/wasm-pack /
 RUN cargo install cargo-chef --target=aarch64-unknown-linux-musl
 RUN cp /root/.cargo/bin/cargo-chef /
 
